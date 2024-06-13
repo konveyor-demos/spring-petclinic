@@ -1,0 +1,113 @@
+= Cloud Migration Workshop
+:icons: font
+:toc: left
+:toclevels: 3
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+[.lead]
+Migrate applications to the cloud
+****
+This workshop is about migrating applications to the cloud.
+It is based on the Konveyor framework, in particular on its Kantra tool, which
+
+* analyzes (Java) applications for cloud readiness, and
+* supports the migration of (Java) applications to the cloud.
+
+We concentrate on Java
+and use a simple example application to demonstrate the migration process.
+The principles and tools can be applied to other languages and applications as well (with some limitations).
+
+[NOTE]
+====
+Konveyor is a community-driven project that aims to help organizations modernize their applications and infrastructure.
+It is part of the Cloud Native Computing Foundation (CNCF).
+
+The workshop is based on the Kantra tool, which is part of the Konveyor project.
+Konveyor is usually installed via the OperatorHub in OpenShift or Kubernetes,
+while Kantra can run in any container environment.
+====
+****
+
+== Preparations
+
+[IMPORTANT]
+.Use a Linux shell
+====
+If you are running on Windows, please use either of the following:
+
+* A `bash` (usually part of the Git installation),
+* The Windows Subsystem for Linux (WSL), or
+* A Linux VM.
+====
+
+* Install either
+** https://podman.io/[Podman] (recommended by
+Konveyor), or
+** https://rancherdesktop.io/[Rancher], or
+** https://www.docker.com/[Docker] (*recommended*, as we used in the workshop examples).
+
++
+[IMPORTANT]
+.Docker environment settings or Podman usage
+====
+* In case you use _Docker_, you need to set the following environment variable:
++
+[source, bash]
+export PODMAN_BIN=docker
+
+* In case you use Podman, you need to use `podman` instead of `docker` in the examples.
+We will support this by using an environment variable `DOCKER_BIN` in the examples.
++
+[source, bash]
+export DOCKER_BIN=podman
+
+We recommend using https://direnv.net/[direnv] to set this variable(s) automatically.
+====
+
+* Clone this repository and change your shell directory to it.
++
+[source, bash]
+----
+git clone https://github.com/konveyor-demos/spring-petclinic.git
+cd spring-petclinic # <1>
+----
+<1> Perform all subsequent commands in this directory.
+
++
+[TIP]
+====
+You may use link:WORKSHOP.adoc[this file] (`WORKSHOP.adoc`) for your convenience to copy/paste] commands.
+It works best with an `asciidoctor` plugin for your IDE, e.g., the https://intellij-asciidoc-plugin.ahus1.de/docs/users-guide/index.html[IntelliJ Plugin].
+====
+
+* Switch to the workshop branch.
++
+[source, bash]
+git checkout workshop
+
+* Build the Spring PetClinic application for container usage
++
+[source, bash]
+----
+${DOCKER_BIN:-docker} compose build
+----
+
+* Install Java 11 or higher (optional, but recommended), e.g., with https://sdkman.io/[SDKMAN!].
+* Install Kantra by following the https://github.com/konveyor/kantra?tab=readme-ov-file#downloading-stable-release[installation instructions].
++
+[TIP]
+====
+In case you want to use the latest version, you can execute the link:scripts/get-kantra.sh[get-kantra.sh] script to download and install Kantra for your convenience.
+
+[source, bash]
+----
+./scripts/get-kantra.sh
+----
+====
+
