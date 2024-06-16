@@ -171,3 +171,48 @@ Either
 
 . If you add more images, you will even see that they are distributed across the replicas.
 
+==== Solution 1a: Running Kantra (Minimal) for Analysis
+
+* Run Kantra with the following command.
++
+[source, bash]
+.Run Kantra
+----
+ifndef::env-github[]
+kantra \# <1>
+  analyze \# <2>
+  --overwrite \# <3>
+  -i . \# <4>
+  -o ../out \# <5>
+  --mode source-only \# <6>
+  --target cloud-readiness # <7>
+endif::env-github[]
+ifdef::env-github[]
+kantra \
+  analyze \
+  --overwrite \
+  -i . \
+  -o ../out \
+  --mode source-only \
+  --target cloud-readiness
+endif::env-github[]
+----
+<1> Is `kantra` in `+${PATH}+`? Otherwise, for example, `../kantra`
+<2> Kantra sub-command `analyze` (see `kantra help`)
+<3> Overwrite existing results
+<4> Input: Current directory
+<5> Output: Directory outside the current directory
+<6> Analyze only your own source code, no dependencies
+<7> Minimal target: Cloud migration (generic)
+
+* Open the resulting report in your browser.
++
+[source, bash]
+.Open the report
+----
+open ../out/static-report/index.html
+----
+
+* Check the report for the Spring PetClinic application.
++
+image::images/initial-konveyor-analysis.png[alt="Initial Konveyor Analysis of Spring PetClinic"]
