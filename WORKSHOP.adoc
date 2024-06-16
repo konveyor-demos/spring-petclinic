@@ -257,3 +257,77 @@ endif::env-github[]
 * Check the extended report in your browser.
 +
 image::images/extended-konveyor-analysis-with-azure-aks.png[alt="Extended Analysis Report with target azure-aks"]
+
+=== Exercise 2: Migrate to current Spring Boot (3.x)
+
+Run the PetClinic (once again) to see if it builds and view the version.
+
+[source, bash]
+----
+mvn spring-boot:run
+----
+
+Look at the Log Output of the Spring Boot application.
+You should see its running Spring 2.6.6.
+
+[source, console]
+----
+...
+:: Built with Spring Boot :: 2.6.6
+...
+----
+
+
+==== Extend the POM by OpenRewrite (optional)
+
+* Extend the `pom.xml` by the OpenRewrite Maven plugin.
++
+[source, xml]
+.OpenRewrite Maven Plugin -> `pom.xml`
+----
+<plugin>
+  <groupId>org.openrewrite.maven</groupId>
+  <artifactId>rewrite-maven-plugin</artifactId>
+  <version>5.27.0</version>
+  <configuration>
+    <activeRecipes>
+      <recipe>org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_2</recipe>
+    </activeRecipes>
+    <activeStyles>
+      <style>org.openrewrite.java.SpringFormat</style>
+    </activeStyles>
+  </configuration>
+  <dependencies>
+    <dependency>
+      <groupId>org.openrewrite.recipe</groupId>
+      <artifactId>rewrite-spring</artifactId>
+      <version>5.7.0</version>
+    </dependency>
+  </dependencies>
+</plugin>
+----
+
+[NOTE]
+====
+The SpringFormat style is defined under `activeStyles`,
+so that OpenRewrite automatically formats in the way Spring expects it.
+This should prevent any formatting issues after the transformation,
+but does not format everything in a way that fulfills the validation of the Spring Format tool.
+====
+
+* Then run the OpenRewrite Maven plugin.
++
+[source, bash]
+----
+./mvnw rewrite:run
+----
+
+==== Run OpenRewrite full CLI (alternative)
+
+Alternatively you may run OpenRewrite completely from the command line.
+
+[source, bash]
+----
+./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
+  -Drewrite.activeRecipes=org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_2
+----
