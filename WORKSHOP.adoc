@@ -358,3 +358,15 @@ Some classes will not build any longer due to a missing XML dependency.
 </dependency>
 ----
 
+Test/Execute the updated application::
++
+[source, bash]
+----
+./mvnw package spring-boot:run
+----
++
+[CAUTION]
+.Switch to Java 17 (or higher)
+====
+Now you will need Java 17 to run the application.
+====
