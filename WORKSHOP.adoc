@@ -324,10 +324,18 @@ but does not format everything in a way that fulfills the validation of the Spri
 
 ==== Run OpenRewrite full CLI (alternative)
 
-Alternatively you may run OpenRewrite completely from the command line.
+Alternatively, you may run OpenRewrite completely from the command line.
 
 [source, bash]
 ----
 ./mvnw org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.activeRecipes=org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_2
 ----
+
+==== Solution 2
+
+When OpenRewrite has successfully applied its rules,
+you still may see several problems before you are back with a running application.
+Several of the following enhancements may be necessary to get it going again.
+
+

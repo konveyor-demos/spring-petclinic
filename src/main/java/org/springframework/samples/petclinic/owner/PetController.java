@@ -22,7 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.Collection;
 
 /**
@@ -48,13 +48,13 @@ class PetController {
 	}
 
 	@ModelAttribute("owner")
-	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
+	public Owner findOwner(@PathVariable int ownerId) {
 		return this.owners.findById(ownerId);
 	}
 
 	@ModelAttribute("pet")
-	public Pet findPet(@PathVariable("ownerId") int ownerId,
-			@PathVariable(name = "petId", required = false) Integer petId) {
+	public Pet findPet(@PathVariable int ownerId,
+			@PathVariable(required = false) Integer petId) {
 		return petId == null ? new Pet() : this.owners.findById(ownerId).getPet(petId);
 	}
 
@@ -93,7 +93,7 @@ class PetController {
 	}
 
 	@GetMapping("/pets/{petId}/edit")
-	public String initUpdateForm(Owner owner, @PathVariable("petId") int petId, ModelMap model) {
+	public String initUpdateForm(Owner owner, @PathVariable int petId, ModelMap model) {
 		Pet pet = owner.getPet(petId);
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
