@@ -345,3 +345,16 @@ Reformat the code as the Maven build will break otherwise.
 ----
 ./mvnw spring-javaformat:apply
 ----
+
+Fix missing dependencies::
+Some classes will not build any longer due to a missing XML dependency.
++
+[source, xml]
+.Add dependency to POM
+----
+<dependency>
+  <groupId>jakarta.xml.bind</groupId>
+  <artifactId>jakarta.xml.bind-api</artifactId>
+</dependency>
+----
+
