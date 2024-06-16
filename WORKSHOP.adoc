@@ -176,7 +176,7 @@ Either
 * Run Kantra with the following command.
 +
 [source, bash]
-.Run Kantra
+.Run Kantra (Cloud Readiness)
 ----
 ifndef::env-github[]
 kantra \# <1>
@@ -216,3 +216,44 @@ open ../out/static-report/index.html
 * Check the report for the Spring PetClinic application.
 +
 image::images/initial-konveyor-analysis.png[alt="Initial Konveyor Analysis of Spring PetClinic"]
+
+==== Solution 1b: Improved Kantra Analysis
+
+There are better targets for the analysis (with better reporting).
+
+* List the available targets.
++
+[source, bash]
+----
+kantra analyze --list-targets
+----
+
+* Choose `azure-aks` as the target.
++
+[source, bash]
+----
+ifndef::env-github[]
+kantra \# <1>
+  analyze \
+  --overwrite \
+  -i . \
+  -o ../out \
+  --mode source-only \
+  --target azure-aks # <2>
+endif::env-github[]
+ifdef::env-github[]
+kantra \
+  analyze \
+  --overwrite \
+  -i . \
+  -o ../out \
+  --mode source-only \
+  --target azure-aks
+endif::env-github[]
+----
+<1> Mind the `+${PATH}+`!
+<2> The target `azure-aks` is a more specific target which provides better reporting.
+
+* Check the extended report in your browser.
++
+image::images/extended-konveyor-analysis-with-azure-aks.png[alt="Extended Analysis Report with target azure-aks"]
