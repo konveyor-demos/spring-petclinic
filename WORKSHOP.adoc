@@ -338,4 +338,10 @@ When OpenRewrite has successfully applied its rules,
 you still may see several problems before you are back with a running application.
 Several of the following enhancements may be necessary to get it going again.
 
-
+Fix formatting of updated code::
+Reformat the code as the Maven build will break otherwise.
++
+[source, bash]
+----
+./mvnw spring-javaformat:apply
+----
