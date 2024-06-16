@@ -111,3 +111,63 @@ In case you want to use the latest version, you can execute the link:scripts/get
 ----
 ====
 
+== Exercises
+
+=== Exercise 1: Run a (scaled) Spring PetClinic application
+
+==== Start with initial application
+
+. Start the Spring PetClinic application in a container.
++
+[source, bash]
+----
+${DOCKER_BIN:-docker} compose up -d
+----
+
+. Upload some images (cf. link:scripts/upload-dummy-image.sh[upload-dummy-image.sh]).
++
+[source, bash]
+----
+./scripts/upload-dummy-image.sh
+# -> Image uploaded successfully
+----
+
+. List the uploaded images (cf. link:scripts/list-images.sh[list-images.sh]).
++
+[source, bash]
+----
+./scripts/list-images.sh
+# -> Image list: ...
+----
+
+==== Scale up
+
+. Now, scale the application to more (>= 2) replicas.
++
+[source, bash]
+----
+${DOCKER_BIN:-docker} compose up -d --scale petclinic=2
+${DOCKER_BIN:-docker} compose restart nginx # necessary to update the load balancer
+----
+
+. List the uploaded images again.
+You should see that the images are distributed across the replicas.
+Either
+
+** You get the list as before:
++
+[source, bash]
+----
+./scripts/list-images.sh
+# -> Image list: ...
+----
+** Or, you get an empty list:
++
+[source, bash]
+----
+./scripts/list-images.sh
+# -> []
+----
+
+. If you add more images, you will even see that they are distributed across the replicas.
+
