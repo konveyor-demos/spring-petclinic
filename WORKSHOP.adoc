@@ -370,3 +370,6 @@ Test/Execute the updated application::
 ====
 Now you will need Java 17 to run the application.
 ====
+
+Clean up properties and configurations (optional)::
+Your IDE and peer reviewer(s) may complain over strange properties and configurations in the `pom.xml`.
