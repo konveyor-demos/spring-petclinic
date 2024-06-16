@@ -393,3 +393,29 @@ Arbitrary executions of Maven may result in output like this.
 Switch to Java 17 for Docker build::
 Running a Docker build may reveal strange error messages, e.g., about mismatching class files.
 Resolve this by bumping the JDK and JRE version numbers of the Docker build and runtime images to 17.
+
+Fix Docker build dependency loads::
+The Docker build was optimized by first downloading all dependencies before starting the build itself.
+In case there was no change in Maven or its configuration, Docker could cache the downloaded dependencies and plugins.
+However, some of the dependencies (Glassfish and EH-Cache) seem to have transitive dependency resolution issues.
+For some reason, they seem not to be used (at least in).
+Hence, we drop them to re-enable Docker builds with proper caching again.
++
+[CAUTION]
+====
+Even though dropping these dependencies does not yet result in build or test errors,
+this doesn't mean that the dropped components are not used any longer.
+====
+
+==== Diffs to `main`
+
+Note that your result will differ in many points from the manually crafted updates on the `main` branch!
+The project now mostly contains code changes which come from the automatic rule application of OpenRewrite.
+In particular, it now lacks changes
+
+* Wrt. semantic problems of code,
+* To documentation,
+* To messages,
+* To the build tools (Maven and Gradle wrappers, GitHub actions, shell scripts, etc.),
+* To the UI/HTML (including CSS, Images, etc.),
+* ...
