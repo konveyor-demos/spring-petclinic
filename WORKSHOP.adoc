@@ -389,3 +389,7 @@ Arbitrary executions of Maven may result in output like this.
 [WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
 [WARNING]
 ----
+
+Switch to Java 17 for Docker build::
+Running a Docker build may reveal strange error messages, e.g., about mismatching class files.
+Resolve this by bumping the JDK and JRE version numbers of the Docker build and runtime images to 17.

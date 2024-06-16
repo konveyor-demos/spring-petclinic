@@ -1,5 +1,5 @@
 # Dockerfile
-FROM eclipse-temurin:11 as build
+FROM eclipse-temurin:17 as build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN ./mvnw dependency:go-offline
 COPY src /app/src/
 RUN ./mvnw package
 
-FROM eclipse-temurin:11-jre
+FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
