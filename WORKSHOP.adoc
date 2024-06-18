@@ -441,3 +441,48 @@ Whatever solution you choose, it most probably affects the following parts of yo
 * Implementation (of at least link:src/main/java/org/springframework/samples/petclinic/images/ImageController.java[ImageController],
 beyond switching the underlying storage, you may have to introduce further configurations, tests etc.).
 
+==== Solution 3 / Re-run Kantra
+
+Once the implementation is stable, run Kantra again.
+
+[source, bash]
+----
+ifndef::env-github[]
+kantra \
+  analyze \
+  --overwrite \
+  -i . \
+  -o ../out-solution-3 \# <1>
+  --mode source-only \
+  --target azure-aks # <2>
+
+open ../out-solution-3/static-report/index.html # <1>
+endif::env-github[]
+ifdef::env-github[]
+kantra \
+  analyze \
+  --overwrite \
+  -i . \
+  -o ../out-solution-3 \
+  --mode source-only \
+  --target azure-aks
+
+open ../out-solution-3/static-report/index.html
+----
+<1> Choose a different output directory to make the reports comparable.
+<2> We still use `azure-aks`.
+
+The report should show that the analyzer no longer finds the file system access cloud-readiness antipattern
+(nevertheless, it still finds other issues).
+
+image::images/resolved-konveyor-analysis-of-fs-issue.png[alt="Filesystem access cloud-readiness antipattern is gone"]
+
+== Cleanup
+
+CAUTION: Clean up the environment after the workshop.
+
+[source, bash]
+.Stop Docker containers
+----
+${DOCKER_BIN:-docker} compose down
+----

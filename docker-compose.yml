@@ -2,10 +2,14 @@ services:
   petclinic:
     image: spring-petclinic
     build: .
+    environment:
+      - SPRING_CLOUD_AWS_S3_ENDPOINT=http://localstack:4566
     expose:
       - "8080"
     deploy:
       replicas: 1
+    depends_on:
+      - localstack
   nginx:
     image: nginx:latest
     ports:
@@ -14,3 +18,12 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - petclinic
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
