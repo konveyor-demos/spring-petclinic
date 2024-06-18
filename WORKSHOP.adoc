@@ -217,6 +217,7 @@ open ../out/static-report/index.html
 +
 image::images/initial-konveyor-analysis.png[alt="Initial Konveyor Analysis of Spring PetClinic"]
 
+[[sec:solution_1b_improved_kantra_analysis]]
 ==== Solution 1b: Improved Kantra Analysis
 
 There are better targets for the analysis (with better reporting).
@@ -419,3 +420,24 @@ In particular, it now lacks changes
 * To the build tools (Maven and Gradle wrappers, GitHub actions, shell scripts, etc.),
 * To the UI/HTML (including CSS, Images, etc.),
 * ...
+
+=== Exercise 3: Migrate from local File Access to Storage Service
+
+Though we now have switched to the current Spring Boot 3,
+the application is still working with a local file store
+as found out in the <<sec:solution_1b_improved_kantra_analysis,Kantra analysis of exercise 1>>.
+This requires an architectural change (re-architect).
+We would like to store the files in a respective storage service
+as provided by the underlying cloud provider or platform.
+
+As we can or will not use any real cloud provider in the workshop,
+we propose to use a local implementation of AWS S3 with https://www.localstack.cloud/[LocalStack].
+
+Whatever solution you choose, it most probably affects the following parts of your implementation:
+
+* Cloud Stack (local link:docker-compose.yml[Docker compose] file).
+* Configuration (link:src/main/resources/application.properties[application properties], perhaps Spring profiles).
+* Dependency management (link:pom.xml[Maven configuration]).
+* Implementation (of at least link:src/main/java/org/springframework/samples/petclinic/images/ImageController.java[ImageController],
+beyond switching the underlying storage, you may have to introduce further configurations, tests etc.).
+
