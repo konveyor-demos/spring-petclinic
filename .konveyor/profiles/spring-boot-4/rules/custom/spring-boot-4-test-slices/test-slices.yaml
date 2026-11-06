@@ -1,0 +1,161 @@
+- ruleID: test-slices-00010
+  description: "@WebMvcTest moved to the spring-boot-webmvc-test module"
+  category: mandatory
+  effort: 1
+  labels:
+    - konveyor.io/source=spring-boot3
+    - konveyor.io/source=spring-boot
+    - konveyor.io/target=spring-boot4
+    - konveyor.io/target=spring-boot
+  message: |-
+    Spring Boot 4 splits the test auto-configuration into technology-specific modules.
+    `@WebMvcTest` moved from `org.springframework.boot.test.autoconfigure.web.servlet`
+    to `org.springframework.boot.webmvc.test.autoconfigure`.
+
+    ### Before
+
+    ```java
+    import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+    ```
+
+    ### After
+
+    ```java
+    import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+    ```
+
+    Add the matching test starter to the build:
+
+    ```xml
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    ```
+  links:
+    - url: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide
+      title: Spring Boot 4.0 Migration Guide
+    - url: https://docs.spring.io/spring-boot/api/java/org/springframework/boot/webmvc/test/autoconfigure/package-summary.html
+      title: org.springframework.boot.webmvc.test.autoconfigure (API)
+  when:
+    java.referenced:
+      pattern: org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+      location: ANNOTATION
+- ruleID: test-slices-00020
+  description: "@AutoConfigureMockMvc moved to the spring-boot-webmvc-test module"
+  category: mandatory
+  effort: 1
+  labels:
+    - konveyor.io/source=spring-boot3
+    - konveyor.io/source=spring-boot
+    - konveyor.io/target=spring-boot4
+    - konveyor.io/target=spring-boot
+  message: |-
+    `@AutoConfigureMockMvc` moved from `org.springframework.boot.test.autoconfigure.web.servlet`
+    to `org.springframework.boot.webmvc.test.autoconfigure`.
+
+    ### Before
+
+    ```java
+    import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+    ```
+
+    ### After
+
+    ```java
+    import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+    ```
+
+    Requires the `spring-boot-starter-webmvc-test` test starter.
+  links:
+    - url: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide
+      title: Spring Boot 4.0 Migration Guide
+    - url: https://docs.spring.io/spring-boot/api/java/org/springframework/boot/webmvc/test/autoconfigure/package-summary.html
+      title: org.springframework.boot.webmvc.test.autoconfigure (API)
+  when:
+    java.referenced:
+      pattern: org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+      location: ANNOTATION
+- ruleID: test-slices-00030
+  description: "@DataJpaTest moved to the spring-boot-data-jpa-test module"
+  category: mandatory
+  effort: 1
+  labels:
+    - konveyor.io/source=spring-boot3
+    - konveyor.io/source=spring-boot
+    - konveyor.io/target=spring-boot4
+    - konveyor.io/target=spring-boot
+  message: |-
+    `@DataJpaTest` moved from `org.springframework.boot.test.autoconfigure.orm.jpa`
+    to `org.springframework.boot.data.jpa.test.autoconfigure`.
+
+    ### Before
+
+    ```java
+    import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+    ```
+
+    ### After
+
+    ```java
+    import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+    ```
+
+    Add the matching test starter to the build:
+
+    ```xml
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    ```
+  links:
+    - url: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide
+      title: Spring Boot 4.0 Migration Guide
+    - url: https://docs.spring.io/spring-boot/api/java/org/springframework/boot/data/jpa/test/autoconfigure/package-summary.html
+      title: org.springframework.boot.data.jpa.test.autoconfigure (API)
+  when:
+    java.referenced:
+      pattern: org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+      location: ANNOTATION
+- ruleID: test-slices-00040
+  description: "@AutoConfigureTestDatabase moved to the spring-boot-jdbc-test module"
+  category: mandatory
+  effort: 1
+  labels:
+    - konveyor.io/source=spring-boot3
+    - konveyor.io/source=spring-boot
+    - konveyor.io/target=spring-boot4
+    - konveyor.io/target=spring-boot
+  message: |-
+    `@AutoConfigureTestDatabase` (including the nested `Replace` enum) moved from
+    `org.springframework.boot.test.autoconfigure.jdbc` to `org.springframework.boot.jdbc.test.autoconfigure`.
+
+    ### Before
+
+    ```java
+    import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+    import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+    ```
+
+    ### After
+
+    ```java
+    import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+    import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase.Replace;
+    ```
+
+    `@DataJpaTest` is itself meta-annotated with `@AutoConfigureTestDatabase`, so the module is
+    available when `spring-boot-starter-data-jpa-test` is on the test classpath. Without it, add
+    `spring-boot-starter-jdbc-test`.
+  links:
+    - url: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide
+      title: Spring Boot 4.0 Migration Guide
+    - url: https://docs.spring.io/spring-boot/api/java/org/springframework/boot/jdbc/test/autoconfigure/package-summary.html
+      title: org.springframework.boot.jdbc.test.autoconfigure (API)
+  when:
+    java.referenced:
+      pattern: org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+      location: ANNOTATION

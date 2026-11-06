@@ -1,0 +1,14 @@
+metadata:
+  id: "spring-boot-4"
+  name: "Spring Boot 3 to 4"
+spec:
+  # Target-only selector, same shape the profile editor generates.
+  # spring-boot4 / spring-framework7 are not offered in the target dropdown of
+  # extension v0.8.x because they are not part of the bundled rulesets.
+  labelSelector: "(konveyor.io/target=spring-boot4 || konveyor.io/target=spring-framework7) || (discovery)"
+  useDefaultRules: true
+  # Paths are resolved relative to this profile directory.
+  customRules:
+    - rules/upstream/spring-boot-4
+    - rules/upstream/spring-framework-7
+    - rules/custom/spring-boot-4-test-slices
